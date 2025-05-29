@@ -33,11 +33,8 @@ const AddTaskForm = () => {
   return (
     <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <div className="  bg-gray-800 rounded-lg p-6">
-          {/* Task Illustration */}
-
-          {/* Task Form */}
-          <div className="md:w-1/2 text-white">
+        <div className="flex flex-col md:flex-row gap-8 rounded-lg p-6">
+          {/* Task Illustration - Background removed */}
           <div className="md:w-1/2 flex items-center justify-center">
             <Image 
               src={imageadd}
@@ -47,6 +44,9 @@ const AddTaskForm = () => {
               className="w-full h-auto max-w-md"
             />
           </div>
+
+          {/* Task Form */}
+          <div className="md:w-1/2 bg-gray-800 text-white p-6 rounded-lg">
             <h2 className="text-2xl font-bold text-white mb-6">Add New Task</h2>
             
             <form onSubmit={handleSubmit}>
