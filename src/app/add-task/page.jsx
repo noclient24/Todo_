@@ -8,45 +8,25 @@ const AddTaskForm = () => {
   const [content, setContent] = useState('');
   const [status, setStatus] = useState('pending');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    setTimeout(() => {
-      console.log({ title, content, status });
-      setIsSubmitting(false);
-      setTitle('');
-      setContent('');
-      setStatus('pending');
-    }, 1000);
-  };
-
-  const handleClear = () => {
-    setTitle('');
-    setContent('');
-    setStatus('pending');
-  };
-
   return (
     <div className=" bg-gray-900  ">
       <div className="mx-[10%]">
         {/* Image at the Top (Centered) */}
-{/* //////////////////////////////////////////////////////////////////////////// */}
+        {/* //////////////////////////////////////////////////////////////////////////// */}
         {/* Form at the Bottom (Full Width) */}
         <div className="bg-gray-800 text-white p-6 rounded-lg">
-        <div className="mb-8 text-center">
-          <Image 
-            src={imageadd}
-            alt="Add Task Illustration"
-            width={300}
-            height={300}
-            className="mx-auto"
-          />
-        </div>
+          <div className="mb-8 text-center">
+            <Image
+              src={imageadd}
+              alt="Add Task Illustration"
+              width={300}
+              height={300}
+              className="mx-auto"
+            />
+          </div>
           <h2 className="text-2xl font-bold text-white mb-6">Add New Task</h2>
-          
-          <form onSubmit={handleSubmit}>
+
+          <form >
             {/* Title Field */}
             <div className="mb-6">
               <label htmlFor="title" className="block text-sm font-medium text-gray-300 mb-2">
@@ -96,9 +76,8 @@ const AddTaskForm = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 ${
-                  isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
+                className={`bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-md transition duration-200 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
@@ -112,8 +91,7 @@ const AddTaskForm = () => {
               </button>
               <button
                 type="button"
-                onClick={handleClear}
-                className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200"
+                className="bg-red-500 hover:bg-red-900 text-white font-medium py-2 px-4 rounded-md transition duration-200"
               >
                 Clear
               </button>
