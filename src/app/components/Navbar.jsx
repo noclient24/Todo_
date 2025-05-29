@@ -57,12 +57,12 @@ const Navbar = () => {
                 <i className="fa-solid fa-house mr-2"></i> Home
               </Link>
 
-              <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800">
+              <Link href="../add-task" className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800">
                 <i className="fa-solid fa-plus-circle mr-2"></i> Add Task
-              </a>
-              <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800">
+              </Link>
+              <Link href="../shoe-Tasks" className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-300 hover:text-white hover:bg-gray-800">
                 <i className="fa-solid fa-list-alt mr-2"></i> Show All Tasks
-              </a>
+              </Link>
             </div>
           </div>
 
