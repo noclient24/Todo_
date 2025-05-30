@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { Signup } from '../serveres/usersignup';
+import { toast, ToastContainer } from 'react-toastify';
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +10,8 @@ const SignupForm = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    about: '' // Added about field
+    about: ''
+
   });
 
   const handleChange = (e) => {
@@ -19,11 +22,36 @@ const SignupForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+
+  const clera = () => {
+    setFormData({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      about: ''
+    })
+  }
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle signup logic here
     console.log(formData);
-  };
+    try {
+      const result = await Signup(formData);
+      if (result?.status) {
+        toast.success('Account created successfully!');
+        clearForm();
+      } else {
+        toast.error(result?.message || 'Signup failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      toast.error(error.message || 'An error occurred during signup');
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -108,6 +136,18 @@ const SignupForm = () => {
           </button>
         </form>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 };
