@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 
- const SignupForm = () => {
+const SignupForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    about: '' // Added about field
   });
 
   const handleChange = (e) => {
@@ -58,6 +59,20 @@ import { useState } from 'react';
             />
           </div>
           <div className="mb-4">
+            <label htmlFor="signup-about" className="block text-gray-300 mb-2">
+              About You
+            </label>
+            <textarea
+              id="signup-about"
+              name="about"
+              value={formData.about}
+              onChange={handleChange}
+              className="w-full px-4 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-600"
+              rows="3"
+              placeholder="Tell us a little about yourself..."
+            />
+          </div>
+          <div className="mb-4">
             <label htmlFor="signup-password" className="block text-gray-300 mb-2">
               Password
             </label>
@@ -97,5 +112,4 @@ import { useState } from 'react';
   );
 };
 
- 
-export default  SignupForm
+export default SignupForm;
