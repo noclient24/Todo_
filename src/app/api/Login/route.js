@@ -9,52 +9,46 @@ export const POST = async (request) => {
     const { email, password } = await request.json();
 
     try {
+        await ConnectDB();
+        const user = await UserData.findOne({ email });
 
-        await ConnectDB()
-        const user= await UserData.findOne({
-            email: email
-        })
-
-        if (user === null) {
-            return NextResponse({
-                message: "User not Found"
-            })
+        if (!user) {
+            return NextResponse.json(
+                { message: "User not found" },
+                { status: 404 }
+            );
         }
 
-
-        const passwormatch=await bcrypt.compareSync(password,user.password)
-        if (!passwormatch){
-            throw new Error ("password not match")
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            return NextResponse.json(
+                { message: "Invalid credentials" },
+                { status: 401 }
+            );
         }
 
-        const mytoken=jwt.sign({
-            _id:user._id,
-            name:user.name
-        },process.env.JWT_KEY)
+        const token = jwt.sign(
+            { _id: user._id, name: user.name },
+            process.env.JWT_KEY,
+            { expiresIn: "1d" }
+        );
 
+        const response = NextResponse.json(
+            { message: "Login successful", token },
+            { status: 200 }
+        );
 
+        response.cookies.set("logintoken", token, {
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+            httpOnly: true // Should typically be true for security
+        });
 
-
-
-
-        const response=  NextResponse.json(mytoken,{
-            message:"success"
-        })
-
-
-
-        response.cookies.set("logintoken",mytoken,{
-            expireIn:"1d",
-            httpOnly:false
-        })
-
-        return response
+        return response;
 
     } catch (error) {
-        console.log(error)
-        return NextResponse.json({
-            message: error,
-            status: 500
-        })
+        return NextResponse.json(
+            { message: error.message || "Server error" },
+            { status: 500 }
+        );
     }
 }

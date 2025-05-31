@@ -1,24 +1,36 @@
 'use client';
 
 import { useState } from 'react';
-import { toast } from 'react-toastify';
+import { ToastContainer,toast } from 'react-toastify';
+import { Login } from '../serveres/usersignup';
 
 const LoginForm = () => {
 
   const [loginData, setLoginData] = useState({
-  email: '',
-  password: ""
-})
+    email: '',
+    password: ""
+  })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(loginData.email.trim()==="" || loginData.password.trim()===""){
-      toast.info("please fill forms",{
-        position:'top-center'
+    if (loginData.email.trim() === "" || loginData.password.trim() === "") {
+      toast.info("please fill forms", {
+        position: 'top-center'
       })
-      return 
+      return
     }
-    console.log(loginData)
+    try {
+      const result = await Login(loginData);
+      
+      toast.success("You have logged in successfully", {
+        position: "top-center"
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message || "Login failed", {
+        position: "top-center"
+      });
+    }
   };
 
   return (
@@ -34,9 +46,9 @@ const LoginForm = () => {
               type="email"
               id="login-email"
               value={loginData.email}
-              onChange={(e)=>{
+              onChange={(e) => {
                 setLoginData({
-                  ...loginData,email:e.target.value
+                  ...loginData, email: e.target.value
                 })
               }}
               className="w-full px-4 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-600"
@@ -50,10 +62,10 @@ const LoginForm = () => {
             <input
               type="password"
               id="login-password"
-             value={loginData.password}
-              onChange={(e)=>{
+              value={loginData.password}
+              onChange={(e) => {
                 setLoginData({
-                  ...loginData,password:e.target.value
+                  ...loginData, password: e.target.value
                 })
               }}
               className="w-full px-4 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-600"
@@ -68,6 +80,18 @@ const LoginForm = () => {
           </button>
         </form>
       </div>
+       <ToastContainer 
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+            />
     </div>
   );
 };
