@@ -11,7 +11,7 @@ export const ConnectDB = async () => {
       dbName: "work_Manager",
     });
 
-    console.log("user Has created");
+ 
     console.log(
       "=============================================================="
     );

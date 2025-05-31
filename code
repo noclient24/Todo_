@@ -1,19 +1,8 @@
-EgnaEKgSGV5I1GLE
-noclient24
-
-
-MONGODB_URL=mongodb+srv://noclient24:EgnaEKgSGV5I1GLE@cluster0.upnx8wa.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
-
-
-
-
-
-
 import { NextResponse } from "next/server";
 
 export function middleware(request) {
-  console.log("Middleware is running...");
+  try {
+    console.log("Middleware is running...");
 
   const getJwt = request.cookies.get("logintoken")?.value;
 
@@ -43,20 +32,12 @@ export function middleware(request) {
   }
 
   console.log(getJwt);
-  console.log(isAuthPage);
-
-  
-
   return NextResponse.next();
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const config = {
   matcher: ["/", "/add-task", "/showTask", "/login", "/signup"],
 };
-
-
-
-
-
-
-

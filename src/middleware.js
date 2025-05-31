@@ -7,7 +7,7 @@ export function middleware(request) {
     if (request.nextUrl.pathname === "/api/Login") {
         return;
     }
-    const loggedInUserNotAccessPaths = request.nextUrl.pathname === "/login" || request.nextUrl.pathname == "/signup";
+    const loggedInUserNotAccessPaths = request.nextUrl.pathname == "/login" || request.nextUrl.pathname === "/signup";
     
     console.log("This is a mytoken",loggedInUserNotAccessPaths, authToken)
 
@@ -15,7 +15,6 @@ export function middleware(request) {
 
     if (loggedInUserNotAccessPaths) {
         if (authToken) {
-            // return NextResponse.redirect(new URL("/showTask", request.url));
             return NextResponse.redirect(new URL('/showTask', request.url))
         }
     }

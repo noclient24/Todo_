@@ -41,7 +41,7 @@ export const POST = async (request) => {
 
         response.cookies.set("logintoken", mytoken, {
             expireIn: "1d",
-            httpOnly: false
+            httpOnly: true,
         })
 
         return response
