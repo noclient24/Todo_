@@ -2,7 +2,7 @@ import { ConnectDB } from "@/helper/bd";
 import { UserData } from "@/model/user";
 
 import { NextResponse } from "next/server";
-
+import bcrypt from 'bcryptjs'
 export const GET = async (request) => {
     await ConnectDB()
 
@@ -35,6 +35,7 @@ export const POST = async (request) => {
             );
         }
 
+
         // Create new user
         const newUser = new UserData({
             name,
@@ -45,6 +46,8 @@ export const POST = async (request) => {
         });
 
         // Save user to database
+        newUser.password=await bcrypt.hash(newUser.password,parseInt(process.env.bcrypt_Salt))
+        console.log({newUser})
         const savedUser = await newUser.save();
 
         // Return success response (exclude password in response)

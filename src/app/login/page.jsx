@@ -1,14 +1,24 @@
 'use client';
 
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
+  const [loginData, setLoginData] = useState({
+  email: '',
+  password: ""
+})
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ email, password });
+    if(loginData.email.trim()==="" || loginData.password.trim()===""){
+      toast.info("please fill forms",{
+        position:'top-center'
+      })
+      return 
+    }
+    console.log(loginData)
   };
 
   return (
@@ -23,8 +33,12 @@ const LoginForm = () => {
             <input
               type="email"
               id="login-email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={loginData.email}
+              onChange={(e)=>{
+                setLoginData({
+                  ...loginData,email:e.target.value
+                })
+              }}
               className="w-full px-4 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-600"
               required
             />
@@ -36,8 +50,12 @@ const LoginForm = () => {
             <input
               type="password"
               id="login-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+             value={loginData.password}
+              onChange={(e)=>{
+                setLoginData({
+                  ...loginData,password:e.target.value
+                })
+              }}
               className="w-full px-4 py-2 bg-gray-600 border border-gray-500 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-teal-600"
               required
             />
