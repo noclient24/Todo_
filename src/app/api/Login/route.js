@@ -3,12 +3,14 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs"
 
 import  jwt  from "jsonwebtoken";
+import { ConnectDB } from "@/helper/bd";
 
 export const POST = async (request) => {
     const { email, password } = await request.json();
 
     try {
 
+        await ConnectDB()
         const user= await UserData.findOne({
             email: email
         })
@@ -32,9 +34,21 @@ export const POST = async (request) => {
 
 
 
-        return NextResponse.json(mytoken,{
+
+
+
+        const response=  NextResponse.json(mytoken,{
             message:"success"
         })
+
+
+
+        response.cookies.set("logintoken",mytoken,{
+            expireIn:"1d",
+            httpOnly:false
+        })
+
+        return response
 
     } catch (error) {
         console.log(error)
