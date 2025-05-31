@@ -11,6 +11,15 @@ const LoginForm = () => {
     password: ""
   })
 
+
+  const clearForm = () => {
+    setLoginData({
+      email: '',
+      password: '',
+     
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loginData.email.trim() === "" || loginData.password.trim() === "") {
@@ -22,9 +31,11 @@ const LoginForm = () => {
     try {
       const result = await Login(loginData);
       
+      console.log(result)
       toast.success("You have logged in successfully", {
         position: "top-center"
       });
+      clearForm()
     } catch (error) {
       console.log(error);
       toast.error(error.message || "Login failed", {
