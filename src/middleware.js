@@ -7,7 +7,7 @@ export function middleware(request) {
     if (request.nextUrl.pathname === "/api/Login") {
         return;
     }
-    const loggedInUserNotAccessPaths = request.nextUrl.pathname == "/login" || request.nextUrl.pathname === "/signup";
+    const loggedInUserNotAccessPaths = request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/signup";
     
     console.log("This is a mytoken",loggedInUserNotAccessPaths, authToken)
 
@@ -24,6 +24,12 @@ export function middleware(request) {
         }
     }
     console.log(authToken);
+
+    console.log(loggedInUserNotAccessPaths, "loggedInUserNotAccessPaths");
+
+    console.log("middleware executed for path:", request.nextUrl.pathname);
+    return NextResponse.next();
+
 }
 
 

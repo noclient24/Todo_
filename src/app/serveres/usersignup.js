@@ -16,3 +16,15 @@ export const Login = async (loginData) => {
         throw error.response?.data?.message || error.message || "Login failed";
     }
 }
+
+
+
+export const Current = async () => {
+    try {
+        const response = await HttpasAxios.get("/api/current");
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error.response?.data?.message || error.message || "Failed to fetch current user";
+    }
+}
