@@ -29,3 +29,15 @@ export const Current = async () => {
     throw error.response?.data?.message || error.message || "Failed to fetch current user";
   }
 }
+
+
+
+export const Logout = async () => {
+  try {
+    const response = await HttpasAxios.post("/api/logout");
+    return response.data;
+  } catch (error) {
+    console.error("Logout error:", error);
+    throw error.response?.data?.message || error.message || "Logout failed";
+  }
+}

@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { UserData } from "@/app/model/user";
+import { ConnectDB } from "@/app/helper/bd";
 
 export const GET = async (request) => {
    try {
-     // Get token from cookies
+   await ConnectDB()
+    // Get token from cookies
      const authToken = request.cookies.get("logintoken")?.value;
      
     
