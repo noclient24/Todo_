@@ -20,11 +20,16 @@ const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    // Initial fetch
     fetchUser();
 
-    // Check for auth changes every 1 second (fallback)
-    const interval = setInterval(fetchUser, 1000);
-    return () => clearInterval(interval);
+    // Event-based updates instead of polling
+    const handleFocus = () => {
+      fetchUser();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
   }, []);
 
   return (
