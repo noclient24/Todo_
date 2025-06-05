@@ -1,5 +1,5 @@
-import { getResponsiveMessage } from "@/helper/responsemessage"
-import { Task } from "@/model/task"
+import { getResponsiveMessage } from "@/app/helper/responsemessage"
+import { Task } from "@/app/model/task"
 import { NextResponse } from "next/server"
 
 export const GET=async(request,{params})=>{

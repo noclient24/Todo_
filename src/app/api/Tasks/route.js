@@ -1,6 +1,6 @@
-import { ConnectDB } from "@/helper/bd";
-import { getResponsiveMessage } from "@/helper/responsemessage";
-import { Task } from "@/model/task";
+import { ConnectDB } from "@/app/helper/bd";
+import { getResponsiveMessage } from "@/app/helper/responsemessage";
+import { Task } from "@/app/model/task";
 import { NextResponse } from "next/server";
 
 

@@ -23,13 +23,12 @@ const LoginForm = () => {
     setIsLoading(true);
 
     try {
-      const result = await Login(loginData);
-      console.log("Login result:", result);
- 
-
-      toast.success("Login successful!", { position: 'top-center' });
-      router.push("/showTask");
-
+      const response = await Login(loginData);
+      if (response.data) {
+        toast.success("Login successful!", { position: 'top-center' });
+        // Middleware will handle the redirect automatically
+        window.location.href = "/add-task"; // Full page reload to ensure context updates
+      }
     } catch (error) {
       console.error("Login error:", error);
       toast.error(error.message || "Login failed", {

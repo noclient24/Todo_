@@ -1,5 +1,5 @@
-import { ConnectDB } from "@/helper/bd"
-import { UserData } from "@/model/user"
+import { ConnectDB } from "@/app/helper/bd"
+import { UserData } from "@/app/model/user"
 import { NextResponse } from "next/server"
 
 export const DELETE = async (request, { params }) => {

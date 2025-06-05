@@ -1,15 +1,18 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { UserData } from "@/model/user";
+import { UserData } from "@/app/model/user";
 
 export const GET = async (request) => {
    try {
      // Get token from cookies
      const authToken = request.cookies.get("logintoken")?.value;
      
+    
      if (!authToken) {
        return NextResponse.json(
-         { message: "Authentication token missing" },
+         { message: "Authentication token missing",
+          error:authToken
+          },
          { status: 401 }
        );
      }

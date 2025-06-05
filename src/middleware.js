@@ -1,45 +1,35 @@
+// middleware.js
 import { NextResponse } from "next/server";
 
-
 export function middleware(request) {
-    console.log("middleware executed");
-    const authToken = request.cookies.get("logintoken")?.value;
-    if (request.nextUrl.pathname === "/api/Login") {
-        return;
-    }
-    const loggedInUserNotAccessPaths = request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/signup";
-    
-    console.log("This is a mytoken",loggedInUserNotAccessPaths, authToken)
+  const getJwt = request.cookies.get("logintoken")?.value;
 
-
-
-    if (loggedInUserNotAccessPaths) {
-        if (authToken) {
-            return NextResponse.redirect(new URL('/showTask', request.url))
-        }
-    }
-    else {
-        if(!authToken){
-            return NextResponse.redirect(new  URL("/login",request.url))
-        }
-    }
-    console.log(authToken);
-
-    console.log(loggedInUserNotAccessPaths, "loggedInUserNotAccessPaths");
-
-    console.log("middleware executed for path:", request.nextUrl.pathname);
+  // Allow API routes
+  if (request.nextUrl.pathname.startsWith("/api")) {
     return NextResponse.next();
+  }
 
+  // If trying to access auth pages while logged in
+  const isAuthPage = 
+    request.nextUrl.pathname === "/signup" || 
+    request.nextUrl.pathname === "/login";
+
+  if (isAuthPage && getJwt) {
+    return NextResponse.redirect(new URL("/add-task", request.url));
+  }
+
+  // If not logged in and trying to access protected pages
+  if (
+    !getJwt && 
+    !isAuthPage &&
+    !request.nextUrl.pathname.startsWith("/_next")
+  ) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  return NextResponse.next();
 }
-
 
 export const config = {
-    matcher: [
-        '/',
-        '/add-task',
-        '/showTask',
-        '/login',
-        '/signup',
-
-    ],
-}
+  matcher: ["/", "/add-task", "/showTask", "/login", "/signup"],
+};

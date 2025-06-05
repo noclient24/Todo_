@@ -1,30 +1,31 @@
-import { HttpasAxios } from "@/helper/HttpsHelper"
+import { HttpasAxios } from "@/app/helper/HttpsHelper"
+
 export const Signup = async (formData) => {
-    try {
-        const signuprsult = await HttpasAxios.post("/api/user", formData).then((respose) => { respose.data })
-        return signuprsult
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+    const response = await HttpasAxios.post("/api/user", formData);
+    return response.data;
+  } catch (error) {
+    console.error("Signup error:", error);
+    throw error.response?.data?.message || error.message || "Signup failed";
+  }
 }
+
 export const Login = async (loginData) => {
-    try {
-        const userlogin = await HttpasAxios.post("/api/Login", loginData);
-        return userlogin;
-    } catch (error) {
-        console.log(error);
-        throw error.response?.data?.message || error.message || "Login failed";
-    }
+  try {
+    const response = await HttpasAxios.post("/api/Login", loginData);
+    return response;
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error.response?.data?.message || error.message || "Login failed";
+  }
 }
-
-
 
 export const Current = async () => {
-    try {
-        const response = await HttpasAxios.get("/api/current");
-        return response.data;
-    } catch (error) {
-        console.log(error);
-        throw error.response?.data?.message || error.message || "Failed to fetch current user";
-    }
+  try {
+    const response = await HttpasAxios.get("/api/current");
+    return response.data;
+  } catch (error) {
+    console.error("Current user error:", error);
+    throw error.response?.data?.message || error.message || "Failed to fetch current user";
+  }
 }
